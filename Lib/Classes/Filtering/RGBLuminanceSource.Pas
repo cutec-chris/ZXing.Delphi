@@ -19,22 +19,24 @@ unit RGBLuminanceSource;
 
 interface
 uses
-  System.SysUtils, System.UITypes, FMX.Graphics,  LuminanceSource;
+  SysUtils, Graphics,  LuminanceSource, IntfGraphics, FPimage;
 
 type
 
+  { TRGBLuminanceSource }
+
   TRGBLuminanceSource = class(TLuminanceSource)
   private
-    luminances: TArray<Byte>;
+    luminances: TBytes;
     isRotated: boolean;
 
   protected
 
   public
-    constructor RGBLuminanceSource(sourceBitmap: TBitmap; w: Integer;
+    constructor RGBLuminanceSource(sourceBitmap: TLazIntfImage; w: Integer;
       h: Integer);
-    function GetRow(y: Integer; row: TArray<Byte>): TArray<Byte>; override;
-    function Matrix: TArray<Byte>; override;
+    function GetRow(y: Integer; row: TBytes): TBytes; override;
+    function Matrix: TBytes; override;
     function Crop(left: Integer; top: Integer; width: Integer; height: Integer)
       : TLuminanceSource; override;
     function RotateCounterClockwise(): TLuminanceSource; override;
@@ -44,14 +46,13 @@ type
 
 implementation
 
-constructor TRGBLuminanceSource.RGBLuminanceSource(sourceBitmap: TBitmap;
+constructor TRGBLuminanceSource.RGBLuminanceSource(sourceBitmap: TLazIntfImage;
   w: Integer; h: Integer);
 
 var
   x, y, offset: Integer;
-  color: TAlphaColor;
+  color: TFPColor;
   red, green, blue: Byte;
-  currentData: TBitmapData;
 
 begin
   inherited LuminanceSource(w, h);
@@ -63,33 +64,27 @@ begin
   // up front, which is the same as the Y channel of the YUVLuminanceSource in the real app.
   SetLength(luminances, FWidth * FHeight);
 
-  if (sourceBitmap.Map(TMapAccess.Read, currentData)) then
-  begin
-    try
-
-      for y := 0 to FHeight - 1 do
+  try
+    {TODO:COnvert to fpimage
+    for y := 0 to FHeight - 1 do
+    begin
+      offset := y * FWidth;
+      for x := 0 to FWidth - 1 do
       begin
-        offset := y * FWidth;
-        for x := 0 to FWidth - 1 do
-        begin
-          color := currentData.GetPixel(x, y);
-          red := TAlphaColorRec(color).R;
-          green := TAlphaColorRec(color).G;
-          blue := TAlphaColorRec(color).B;
-          luminances[offset + x] := red shl 16 or green shl 8 or blue;
-        end;
-
+        color := currentData.GetPixel(x, y);
+        red := TAlphaColorRec(color).R;
+        green := TAlphaColorRec(color).G;
+        blue := TAlphaColorRec(color).B;
+        luminances[offset + x] := red shl 16 or green shl 8 or blue;
       end;
-    finally
-      sourceBitmap.Unmap(currentData);
-      //sourceBitmap.DisposeOf();
     end;
+    }
+  finally
   end;
 
 end;
 
-function TRGBLuminanceSource.GetRow(y: Integer; row: TArray<Byte>)
-  : TArray<Byte>;
+function TRGBLuminanceSource.GetRow(y: Integer; row: TBytes): TBytes;
 var
   i, rowSize: Integer;
 begin
@@ -129,7 +124,7 @@ begin
 end;
 
 
-function TRGBLuminanceSource.Matrix: TArray<Byte>;
+function TRGBLuminanceSource.Matrix: TBytes;
 begin
   result := luminances;
 end;

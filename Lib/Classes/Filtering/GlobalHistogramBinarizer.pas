@@ -26,12 +26,12 @@ type
   private
 
     class var LUMINANCE_BITS, LUMINANCE_SHIFT, LUMINANCE_BUCKETS: Integer;
-    EMPTY: TArray<Byte>;
+    EMPTY: TBytes;
 
-    luminances: TArray<Byte>;
-    buckets: TArray<Integer>;
+    luminances: TBytes;
+    buckets: TBoundArray;
     procedure InitArrays(luminanceSize: Integer);
-    function estimateBlackPoint(buckets: TArray<Integer>;
+    function estimateBlackPoint(buckets: TBoundArray;
       var blackPoint: Integer): Boolean;
     class procedure ClassInit; static;
 
@@ -51,7 +51,6 @@ begin
   LUMINANCE_BITS := 5;
   LUMINANCE_SHIFT := 8 - LUMINANCE_BITS;
   LUMINANCE_BUCKETS := 1 shl LUMINANCE_BITS;
-  EMPTY := TArray<Byte>.Create();
   SetLength(EMPTY, 0);
 end;
 
@@ -59,7 +58,6 @@ constructor TGlobalHistogramBinarizer.Create(source: TLuminanceSource);
 begin
   inherited Create(source);
   luminances := EMPTY;
-  buckets := TArray<Integer>.Create();
   SetLength(self.buckets, LUMINANCE_BUCKETS);
 end;
 
@@ -79,8 +77,8 @@ end;
 function TGlobalHistogramBinarizer.GetBlackRow(y: Integer; row: TBitArray)
   : TBitArray;
 var
-  localLuminances: TArray<Byte>;
-  localBuckets: TArray<Integer>;
+  localLuminances: TBytes;
+  localBuckets: TBoundArray;
   i, w, blackPoint, x, pixel, left, right, center, luminance: Integer;
 begin
   w := width;
@@ -147,7 +145,7 @@ begin
 
 end;
 
-function TGlobalHistogramBinarizer.estimateBlackPoint(buckets: TArray<Integer>;
+function TGlobalHistogramBinarizer.estimateBlackPoint(buckets: TBoundArray;
   var blackPoint: Integer): Boolean;
 
 var

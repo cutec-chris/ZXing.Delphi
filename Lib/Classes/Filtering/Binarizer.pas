@@ -20,7 +20,7 @@ unit Binarizer;
 interface
 
 uses
-  System.SysUtils, LuminanceSource, BitArray, BitMatrix;
+  SysUtils, LuminanceSource, BitArray, BitMatrix;
 
 type
 
@@ -31,6 +31,9 @@ type
   ///
   /// <author>dswitkin@google.com (Daniel Switkin)</author>
   /// </summary>
+
+  { TBinarizer }
+
   TBinarizer = class
   private
     FSource: TLuminanceSource;
@@ -62,7 +65,7 @@ type
     function GetBlackRow(y: Integer; row: TBitArray): TBitArray;
       virtual; abstract;
 
-    function BlackMatrix: TBitmatrix; virtual; abstract;
+    function BlackMatrix: TBitmatrix; virtual;
     destructor Destroy();override;
 
     /// <summary> Creates a new object with the same type as this Binarizer implementation, but with pristine
@@ -116,6 +119,11 @@ end;
 function TBinarizer.LuminanceSource: TLuminanceSource;
 begin
   result := Self.FSource;
+end;
+
+function TBinarizer.BlackMatrix: TBitmatrix;
+begin
+
 end;
 
 end.

@@ -20,7 +20,7 @@ unit LuminanceSource;
 interface
 
 uses
-  System.SysUtils;
+  SysUtils;
 
 /// <summary>
 /// The purpose of this class hierarchy is to abstract different bitmap implementations across
@@ -39,8 +39,8 @@ Type
     FHeight: Integer;
   public
     constructor LuminanceSource(width: Integer; height: Integer); virtual;
-    function Matrix: TArray<byte>; virtual; abstract;
-    function GetRow(y: Integer; row: TArray<byte>): TArray<byte>;
+    function Matrix: TBytes; virtual; abstract;
+    function GetRow(y: Integer; row: TBytes): TBytes;
       virtual; abstract;
 
     function CropSupported(): Boolean; virtual;
@@ -138,7 +138,7 @@ end;
 
 function TLuminanceSource.ToString(): String;
 var
-  row: TArray<byte>;
+  row: TBytes;
   x, y, luminance: Integer;
   c: char;
   sResult: String;

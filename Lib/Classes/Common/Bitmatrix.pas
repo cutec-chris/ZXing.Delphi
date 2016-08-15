@@ -19,14 +19,14 @@ unit Bitmatrix;
 }
 interface
 
-uses SysUtils, Generics.Collections, BitArray, BarcodeFormat,
-  Fmx.Graphics, Helpers, MathUtils;
+uses SysUtils, BitArray, BarcodeFormat,
+  Graphics, Helpers, MathUtils;
 
 type
 
   TBitMatrix = class
   private
-    Fbits: TArray<Integer>;
+    Fbits: TBoundArray;
     Fheight: Integer;
     FrowSize: Integer;
     Fwidth: Integer;
@@ -35,7 +35,7 @@ type
     procedure SetBit(x, y: Integer; Value: Boolean);
 
     constructor Create(width: Integer; height: Integer; rowSize: Integer;
-      bits: TArray<Integer>); overload;
+      bits: TBoundArray); overload;
 
   public
     constructor Create(dimension: Integer); overload;
@@ -45,11 +45,11 @@ type
     function Clone: TObject;
     function Equals(obj: TObject): Boolean; override;
     procedure flip(x: Integer; y: Integer);
-    function getBottomRightOnBit: TArray<Integer>;
-    function getEnclosingRectangle: TArray<Integer>;
+    function getBottomRightOnBit: TBoundArray;
+    function getEnclosingRectangle: TBoundArray;
     function GetHashCode: Integer; override;
     function getRow(y: Integer; row: TBitArray): TBitArray;
-    function getTopLeftOnBit: TArray<Integer>;
+    function getTopLeftOnBit: TBoundArray;
     procedure Rotate180;
     procedure setRegion(left: Integer; top: Integer; width: Integer;
       height: Integer);
@@ -107,14 +107,14 @@ end;
 
 function TBitMatrix.Clone: TObject;
 var
-  b: TArray<Integer>;
+  b: TBoundArray;
 begin
   b := TArray.Clone(Fbits);
   result := TBitMatrix.Create(Self.Fwidth, Self.Fheight, Self.FrowSize, b);
 end;
 
 constructor TBitMatrix.Create(width, height, rowSize: Integer;
-  bits: TArray<Integer>);
+  bits: TBoundArray);
 begin
   if ((width < 1) or (height < 1)) then
     raise EArgumentException.Create('Both dimensions must be greater than 0');
@@ -195,7 +195,7 @@ begin
   Fbits[offset] := (Fbits[offset] xor (1 shl x))
 end;
 
-function TBitMatrix.getBottomRightOnBit: TArray<Integer>;
+function TBitMatrix.getBottomRightOnBit: TBoundArray;
 var
   bitsOffset, x, y, theBits, bit: Integer;
 begin
@@ -222,12 +222,11 @@ begin
   end;
 
   inc(x, bit);
-  result := TArray<Integer>.Create(x, y);
   exit;
 
 end;
 
-function TBitMatrix.getEnclosingRectangle: TArray<Integer>;
+function TBitMatrix.getEnclosingRectangle: TBoundArray;
 var
   bit, left, top, right, bottom, y, x32, theBits, widthTmp, heightTmp: Integer;
 begin
@@ -290,7 +289,11 @@ begin
     exit
   end;
 
-  result := TArray<Integer>.Create(left, top, widthTmp, heightTmp);
+  SetLength(Result,4);
+  result[0] := left;
+  result[1] := top;
+  result[2] := widthTmp;
+  result[3] := heightTmp;
   exit;
 
 end;
@@ -337,7 +340,7 @@ begin
 
 end;
 
-function TBitMatrix.getTopLeftOnBit: TArray<Integer>;
+function TBitMatrix.getTopLeftOnBit: TBoundArray;
 var
   bitsOffset, x, y, theBits, bit: Integer;
 begin
@@ -365,7 +368,9 @@ begin
   end;
 
   inc(x, bit);
-  result := TArray<Integer>.Create(x, y);
+  SetLength(Result,2);
+  result[0]:=x;
+  result[1]:=y;
   exit
 
 end;

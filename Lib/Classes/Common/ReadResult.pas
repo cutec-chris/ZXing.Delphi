@@ -20,7 +20,7 @@ unit ReadResult;
 interface
 
 uses
-  SysUtils, Generics.Collections,
+  SysUtils,
   ResultPoint, ResultMetadataType, BarcodeFormat;
 
 type

@@ -2,7 +2,7 @@ unit ScanManager;
 
 interface
 
-uses SysUtils, FMX.Graphics, generics.collections, RGBLuminanceSource,
+uses SysUtils, Graphics, RGBLuminanceSource,
   HybridBinarizer, BinaryBitmap,
   MultiFormatReader, ReadResult, BarcodeFormat, DecodeHintType;
 

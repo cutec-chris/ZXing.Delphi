@@ -21,20 +21,19 @@ interface
 
 type
   TArray = class
-    class function Clone(original: TArray<Integer>): TArray<Integer>; static;
-    class function CopyInSameArray(const Input: TArray<Integer>;
-      StartIndex: Integer; Len: Integer): TArray<Integer>; static;
+    class function Clone(original: TBoundArray): TBoundArray; static;
+    class function CopyInSameArray(const Input: TBoundArray;
+      StartIndex: Integer; Len: Integer): TBoundArray; static;
   end;
 
 implementation
 
-class function TArray.Clone(original: TArray<Integer>): TArray<Integer>;
+class function TArray.Clone(original: TBoundArray): TBoundArray;
 var
   i: Integer;
   l: SmallInt;
 begin
   l := Length(original);
-  Result := TArray<Integer>.Create();
   SetLength(Result, l);
 
   for i := 0 to l - 1 do
@@ -43,8 +42,8 @@ begin
   end;
 end;
 
-class function TArray.CopyInSameArray(const Input: TArray<Integer>;
-  StartIndex: Integer; Len: Integer): TArray<Integer>;
+class function TArray.CopyInSameArray(const Input: TBoundArray;
+  StartIndex: Integer; Len: Integer): TBoundArray;
 var
   i, y: Integer;
 begin

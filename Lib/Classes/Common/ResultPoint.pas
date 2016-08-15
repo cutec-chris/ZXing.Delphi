@@ -25,6 +25,11 @@ type
 
   byteArray = array of byte;
 
+  TResultPoint = class;
+  TResultPointArray = array of TResultPoint;
+
+  { TResultPoint }
+
   TResultPoint = class
   private
     Fx, Fy: single;
@@ -40,7 +45,7 @@ type
     function Equals(other: TObject): Boolean; override;
     function GetHashCode(): Integer; override;
     function ToString(): String; override;
-    class procedure OrderBestPatterns(patterns: TArray<TResultPoint>); static;
+    class procedure OrderBestPatterns(patterns: TResultPointArray); static;
     class function Distance(pattern1, pattern2: TResultPoint): single; static;
 
     property x: single read Fx write Fx;
@@ -129,7 +134,7 @@ begin
     bytesY[3];
 end;
 
-class procedure TResultPoint.OrderBestPatterns(patterns: TArray<TResultPoint>);
+class procedure TResultPoint.OrderBestPatterns(patterns: TResultPointArray);
 var
   zeroOneDistance, oneTwoDistance, zeroTwoDistance: single;
   pointA, pointB, pointC, temp: TResultPoint;

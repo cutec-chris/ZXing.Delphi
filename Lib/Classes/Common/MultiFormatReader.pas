@@ -17,7 +17,7 @@ unit MultiFormatReader;
 }
 interface
 
-uses SysUtils, rtti, Generics.Collections,
+uses SysUtils,
   ReadResult, Reader, DecodeHintType, BinaryBitmap, BarcodeFormat,
   MultiFormatOneDReader, ResultPoint, OneDReader, QRCodeReader;
 

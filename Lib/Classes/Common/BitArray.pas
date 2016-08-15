@@ -24,14 +24,14 @@ uses SysUtils, MathUtils;
 type
   TBitArray = class
   private
-    _lookup: TArray<Integer>;
+    _lookup: TBoundArray;
 
-    FBits: TArray<Integer>;
+    FBits: TBoundArray;
     Fsize: Integer;
     procedure InitLookup();
     function GetBit(i: Integer): Boolean;
     procedure SetBit(i: Integer; Value: Boolean);
-    function MakeArray(Size: Integer): TArray<Integer>;
+    function MakeArray(Size: Integer): TBoundArray;
 
     function numberOfTrailingZeros(num: Integer): Integer;
 
@@ -40,7 +40,7 @@ type
     function SizeInBytes: Integer;
 
     property Self[i: Integer]: Boolean read GetBit write SetBit; default;
-    property Bits: TArray<Integer> read FBits;
+    property Bits: TBoundArray read FBits;
 
     constructor Create(); overload;
     constructor Create(Size: Integer); overload;
@@ -185,9 +185,44 @@ end;
 
 procedure TBitArray.InitLookup;
 begin
-  _lookup := TArray<Integer>.Create(32, 0, 1, 26, 2, 23, 27, 0, 3, 16, 24, 30,
-    28, 11, 0, 13, 4, 7, 17, 0, 25, 22, 31, 15, 29, 10, 12, 6, 0, 21, 14, 9, 5,
-    20, 8, 19, 18);
+  SetLength(_lookup,37);
+  _lookup[0] := 32;
+  _lookup[1] := 0;
+  _lookup[2] := 1;
+  _lookup[3] := 26;
+  _lookup[4] := 2;
+  _lookup[5] := 23;
+  _lookup[6] := 27;
+  _lookup[7] := 0;
+  _lookup[8] := 3;
+  _lookup[9] := 16;
+  _lookup[10] := 24;
+  _lookup[11] := 30;
+  _lookup[12] := 28;
+  _lookup[13] := 11;
+  _lookup[14] := 0;
+  _lookup[15] := 13;
+  _lookup[16] := 4;
+  _lookup[17] := 7;
+  _lookup[18] := 17;
+  _lookup[19] := 0;
+  _lookup[20] := 25;
+  _lookup[21] := 22;
+  _lookup[22] := 31;
+  _lookup[23] := 15;
+  _lookup[24] := 29;
+  _lookup[25] := 10;
+  _lookup[26] := 12;
+  _lookup[27] := 6;
+  _lookup[28] := 0;
+  _lookup[29] := 21;
+  _lookup[30] := 14;
+  _lookup[31] := 9;
+  _lookup[32] := 5;
+  _lookup[33] := 20;
+  _lookup[34] := 8;
+  _lookup[35] := 19;
+  _lookup[36] := 18;
 end;
 
 function TBitArray.isRange(start, ending: Integer; Value: Boolean): Boolean;
@@ -266,9 +301,9 @@ begin
   Result := true;
 end;
 
-function TBitArray.MakeArray(Size: Integer): TArray<Integer>;
+function TBitArray.MakeArray(Size: Integer): TBoundArray;
 var
-  ar: TArray<Integer>;
+  ar: TBoundArray;
 begin
   SetLength(ar, TMathUtils.Asr((Size + 31), 5));
   Result := ar;
@@ -288,7 +323,7 @@ end;
 
 procedure TBitArray.Reverse;
 var
-  newBits: TArray<Integer>;
+  newBits: TBoundArray;
   i, len, oldBitsLen, leftOffset, mask, nextInt, currentInt: Integer;
   x: Int64;
 begin

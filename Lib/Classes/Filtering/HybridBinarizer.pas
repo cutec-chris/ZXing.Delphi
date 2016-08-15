@@ -46,18 +46,18 @@ uses SysUtils, GlobalHistogramBinarizer, LuminanceSource, Bitmatrix, binarizer,
 
 type
 
-  TArrayIntOfInt = TArray<TArray<Integer>>;
+  TArrayIntOfInt = array of TBoundArray;
 
   THybridBinarizer = class(TGlobalHistogramBinarizer)
   private
     matrix: TBitMatrix;
     procedure BinarizeEntireImage;
-    procedure calculateThresholdForBlock(luminances: TArray<Byte>;
+    procedure calculateThresholdForBlock(luminances: TBytes;
       subWidth: Integer; subHeight: Integer; width: Integer; height: Integer;
       blackPoints: TArrayIntOfInt; matrix: TBitMatrix);
-    function calculateBlackPoints(luminances: TArray<Byte>; subWidth: Integer;
+    function calculateBlackPoints(luminances: TBytes; subWidth: Integer;
       subHeight: Integer; width: Integer; height: Integer): TArrayIntOfInt;
-    procedure thresholdBlock(luminances: TArray<Byte>; xoffset: Integer;
+    procedure thresholdBlock(luminances: TBytes; xoffset: Integer;
       yoffset: Integer; threshold: Integer; stride: Integer;
       matrix: TBitMatrix);
     function cap(value: Integer; min: Integer; max: Integer): Integer;
@@ -89,7 +89,7 @@ end;
 procedure THybridBinarizer.BinarizeEntireImage;
 var
   source: TLuminanceSource;
-  luminances: TArray<Byte>;
+  luminances: TBytes;
   subWidth, subHeight, width, height: Integer;
   blackPoints: TArrayIntOfInt;
   newMatrix: TBitMatrix;
@@ -137,7 +137,7 @@ begin
   end;
 end;
 
-function THybridBinarizer.calculateBlackPoints(luminances: TArray<Byte>;
+function THybridBinarizer.calculateBlackPoints(luminances: TBytes;
   subWidth: Integer; subHeight: Integer; width: Integer; height: Integer)
   : TArrayIntOfInt;
 var
@@ -146,13 +146,11 @@ var
     xx, pixel, average, averageNeighborBlackPoint: Integer;
 
 begin
-  blackPoints := TArrayIntOfInt.Create();
   SetLength(blackPoints, subHeight);
   i := 0;
 
   while ((i < subHeight)) do
   begin
-    blackPoints[i] := TArray<Integer>.Create();
     SetLength(blackPoints[i], subWidth);
     inc(i)
   end;
@@ -238,13 +236,13 @@ begin
   result := blackPoints;
 end;
 
-procedure THybridBinarizer.calculateThresholdForBlock(luminances: TArray<Byte>;
+procedure THybridBinarizer.calculateThresholdForBlock(luminances: TBytes;
   subWidth: Integer; subHeight: Integer; width: Integer; height: Integer;
   blackPoints: TArrayIntOfInt; matrix: TBitMatrix);
 var
   y, yoffset, maxYOffset, x, xoffset, maxXOffset, left, top, sum, z,
     average: Integer;
-  blackRow: TArray<Integer>;
+  blackRow: TBoundArray;
 begin
   y := 0;
   while ((y < subHeight)) do
@@ -287,7 +285,7 @@ begin
   inherited Create(source);
 end;
 
-procedure THybridBinarizer.thresholdBlock(luminances: TArray<Byte>;
+procedure THybridBinarizer.thresholdBlock(luminances: TBytes;
   xoffset: Integer; yoffset: Integer; threshold: Integer; stride: Integer;
   matrix: TBitMatrix);
 var

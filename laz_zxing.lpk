@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="laz_zxing"/>
+    <Type Value="RunAndDesignTime"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <OtherUnitFiles Value="Lib\Classes;Lib\Classes\Filtering;Lib\Classes\Common"/>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)\"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <SyntaxMode Value="Delphi"/>
+        </SyntaxOptions>
+      </Parsing>
+    </CompilerOptions>
+    <Files Count="30">
+      <Item1>
+        <Filename Value="Lib\Classes\ScanManager.pas"/>
+        <UnitName Value="ScanManager"/>
+      </Item1>
+      <Item2>
+        <Filename Value="Lib\Classes\1D Barcodes\Code93Reader.pas"/>
+        <UnitName Value="Code93Reader"/>
+      </Item2>
+      <Item3>
+        <Filename Value="Lib\Classes\1D Barcodes\Code128Reader.pas"/>
+        <UnitName Value="Code128Reader"/>
+      </Item3>
+      <Item4>
+        <Filename Value="Lib\Classes\1D Barcodes\ITFReader.pas"/>
+        <UnitName Value="ITFReader"/>
+      </Item4>
+      <Item5>
+        <Filename Value="Lib\Classes\1D Barcodes\MultiFormatOneDReader.pas"/>
+        <UnitName Value="MultiFormatOneDReader"/>
+      </Item5>
+      <Item6>
+        <Filename Value="Lib\Classes\1D Barcodes\OneDReader.pas"/>
+        <UnitName Value="OneDReader"/>
+      </Item6>
+      <Item7>
+        <Filename Value="Lib\Classes\1D Barcodes\Reader.pas"/>
+        <UnitName Value="Reader"/>
+      </Item7>
+      <Item8>
+        <Filename Value="Lib\Classes\Filtering\Binarizer.pas"/>
+        <UnitName Value="Binarizer"/>
+      </Item8>
+      <Item9>
+        <Filename Value="Lib\Classes\Filtering\BinaryBitmap.pas"/>
+        <UnitName Value="BinaryBitmap"/>
+      </Item9>
+      <Item10>
+        <Filename Value="Lib\Classes\Filtering\GlobalHistogramBinarizer.pas"/>
+        <UnitName Value="GlobalHistogramBinarizer"/>
+      </Item10>
+      <Item11>
+        <Filename Value="Lib\Classes\Filtering\HybridBinarizer.pas"/>
+        <UnitName Value="HybridBinarizer"/>
+      </Item11>
+      <Item12>
+        <Filename Value="Lib\Classes\Filtering\LuminanceSource.pas"/>
+        <UnitName Value="LuminanceSource"/>
+      </Item12>
+      <Item13>
+        <Filename Value="Lib\Classes\Filtering\RGBLuminanceSource.Pas"/>
+        <UnitName Value="RGBLuminanceSource"/>
+      </Item13>
+      <Item14>
+        <Filename Value="Lib\Classes\Common\BarcodeFormat.pas"/>
+        <UnitName Value="BarcodeFormat"/>
+      </Item14>
+      <Item15>
+        <Filename Value="Lib\Classes\Common\BitArray.pas"/>
+        <UnitName Value="BitArray"/>
+      </Item15>
+      <Item16>
+        <Filename Value="Lib\Classes\Common\Bitmatrix.pas"/>
+        <UnitName Value="Bitmatrix"/>
+      </Item16>
+      <Item17>
+        <Filename Value="Lib\Classes\Common\BitSource.pas"/>
+        <UnitName Value="BitSource"/>
+      </Item17>
+      <Item18>
+        <Filename Value="Lib\Classes\Common\CharacterSetECI.pas"/>
+        <UnitName Value="CharacterSetECI"/>
+      </Item18>
+      <Item19>
+        <Filename Value="Lib\Classes\Common\DecodeHintType.pas"/>
+        <UnitName Value="DecodeHintType"/>
+      </Item19>
+      <Item20>
+        <Filename Value="Lib\Classes\Common\DecoderResult.pas"/>
+        <UnitName Value="DecoderResult"/>
+      </Item20>
+      <Item21>
+        <Filename Value="Lib\Classes\Common\DefaultGridSampler.pas"/>
+        <UnitName Value="DefaultGridSampler"/>
+      </Item21>
+      <Item22>
+        <Filename Value="Lib\Classes\Common\DetectorResult.pas"/>
+        <UnitName Value="DetectorResult"/>
+      </Item22>
+      <Item23>
+        <Filename Value="Lib\Classes\Common\Helpers.pas"/>
+        <UnitName Value="Helpers"/>
+      </Item23>
+      <Item24>
+        <Filename Value="Lib\Classes\Common\MathUtils.pas"/>
+        <UnitName Value="MathUtils"/>
+      </Item24>
+      <Item25>
+        <Filename Value="Lib\Classes\Common\MultiFormatReader.pas"/>
+        <UnitName Value="MultiFormatReader"/>
+      </Item25>
+      <Item26>
+        <Filename Value="Lib\Classes\Common\PerspectiveTransform.pas"/>
+        <UnitName Value="PerspectiveTransform"/>
+      </Item26>
+      <Item27>
+        <Filename Value="Lib\Classes\Common\ReadResult.pas"/>
+        <UnitName Value="ReadResult"/>
+      </Item27>
+      <Item28>
+        <Filename Value="Lib\Classes\Common\ResultMetadataType.pas"/>
+        <UnitName Value="ResultMetadataType"/>
+      </Item28>
+      <Item29>
+        <Filename Value="Lib\Classes\Common\ResultPoint.pas"/>
+        <UnitName Value="ResultPoint"/>
+      </Item29>
+      <Item30>
+        <Filename Value="Lib\Classes\Common\StringUtils.pas"/>
+        <UnitName Value="StringUtils"/>
+      </Item30>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>
